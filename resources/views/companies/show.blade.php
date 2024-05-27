@@ -2,4 +2,8 @@ Company: {{ $company->name }}
 
 <br />
 
-<img src="{{ $photo }}" />
+@if ($photo)
+    <img src="{{ $photo }}" />
+@else
+    <p>No photo available</p>
+@endif

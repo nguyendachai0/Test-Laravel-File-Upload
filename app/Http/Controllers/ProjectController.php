@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Rules\MaxMegabyte;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -11,11 +12,12 @@ class ProjectController extends Controller
     {
         $request->validate([
             // TASK: Write the validation rule so "logo" file would be MAX 1 megabyte
+            'logo' => ['required', 'file', new MaxMegabyte],
         ]);
 
         // TASK: change the below line so that $filename would contain only filename
         // The same filename as the original uploaded file
-        $filename = '???';
+        $filename = $request->file('logo')->getClientOriginalName();
         $request->file('logo')->storeAs('logos', $filename);
 
         Project::create([
